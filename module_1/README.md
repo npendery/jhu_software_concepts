@@ -22,7 +22,7 @@ This is a simple personal portfolio website built with Flask.
     ```bash
     python run.py
     ```
-6.  Open your web browser and go to `http://127.0.0.1:5000/`
+6.  Open your web browser and go to `http://127.0.0.1:8000/`
 
 ## Project Structure
 
@@ -41,12 +41,9 @@ This is a simple personal portfolio website built with Flask.
 
 ## Screenshots
 
-### Home
-![](screenshots/Home.pdf)
+[Home](screenshots/Home.pdf)
 
-### Contact
-![](screenshots/Contact.pdf)
+[Contact](screenshots/Contact.pdf)
 
-### Projects
-![](screenshots/Projects.pdf)
+[Projects](screenshots/Projects.pdf)
 
