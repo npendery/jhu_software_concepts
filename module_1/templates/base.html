@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}My Portfolio{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="{{ url_for('pages.home') }}" class="{% if active_page == 'home' %}active{% endif %}">Home</a></li>
+            <li><a href="{{ url_for('pages.contact') }}" class="{% if active_page == 'contact' %}active{% endif %}">Contact</a></li>
+            <li><a href="{{ url_for('pages.projects') }}" class="{% if active_page == 'projects' %}active{% endif %}">Projects</a></li>
+        </ul>
+    </nav>
+    <div class="content">
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html> 
