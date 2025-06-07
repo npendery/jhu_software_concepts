@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grad Cafe Data Analysis</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Grad Cafe Application Analysis</h1>
+
+        {% if error_message %}
+            <div class="error-banner">
+                <p><strong>Error:</strong> {{ error_message }}</p>
+            </div>
+        {% endif %}
+
+        <div class="results-grid">
+            <div class="result-card">
+                <h2>1. Fall 2024 Entries</h2>
+                <p class="data">Total Entries: <strong>{{ results.q1 | default('N/A') }}</strong></p>
+                <details>
+                    <summary>Query Used</summary>
+                    <pre><code>{{ queries.q1 | default('Query not available.') }}</code></pre>
+                </details>
+            </div>
+
+            <div class="result-card">
+                <h2>2. International Student Percentage</h2>
+                <p class="data">Percentage: <strong>{{ results.q2 | default('N/A') }}%</strong></p>
+                <details>
+                    <summary>Query Used</summary>
+                    <pre><code>{{ queries.q2 | default('Query not available.') }}</code></pre>
+                </details>
+            </div>
+
+            <div class="result-card">
+                <h2>3. Average Metrics (Overall)</h2>
+                <p class="data">Avg. GPA: <strong>{{ results.q3_avg_gpa | round(2) if results.q3_avg_gpa is not none and results.q3_avg_gpa != 'N/A' else 'N/A' }}</strong></p>
+                <p class="data">Avg. GRE (Quant): <strong>{{ results.q3_avg_gre | round(1) if results.q3_avg_gre is not none and results.q3_avg_gre != 'N/A' else 'N/A' }}</strong></p>
+                <p class="data">Avg. GRE (Verbal): <strong>{{ results.q3_avg_gre_v | round(1) if results.q3_avg_gre_v is not none and results.q3_avg_gre_v != 'N/A' else 'N/A' }}</strong></p>
+                <p class="data">Avg. GRE (AW): <strong>{{ results.q3_avg_gre_aw | round(1) if results.q3_avg_gre_aw is not none and results.q3_avg_gre_aw != 'N/A' else 'N/A' }}</strong></p>
+                <details>
+                    <summary>Query Used</summary>
+                    <pre><code>{{ queries.q3 | default('Query not available.') }}</code></pre>
+                </details>
+            </div>
+            
+            <div class="result-card">
+                <h2>4. Avg. GPA American Students (Fall 2024)</h2>
+                <p class="data">Avg. GPA: <strong>{{ results.q4 | round(2) if results.q4 is not none and results.q4 != 'N/A' else 'N/A' }}</strong></p>
+                <details>
+                    <summary>Query Used</summary>
+                    <pre><code>{{ queries.q4 | default('Query not available.') }}</code></pre>
+                </details>
+            </div>
+
+            <div class="result-card">
+                <h2>5. Fall 2024 Acceptance Percentage</h2>
+                <p class="data">Percentage: <strong>{{ results.q5 | default('N/A') }}%</strong></p>
+                <details>
+                    <summary>Query Used</summary>
+                    <pre><code>{{ queries.q5 | default('Query not available.') }}</code></pre>
+                </details>
+            </div>
+
+            <div class="result-card">
+                <h2>6. Avg. GPA Accepted (Fall 2024)</h2>
+                <p class="data">Avg. GPA: <strong>{{ results.q6 | round(2) if results.q6 is not none and results.q6 != 'N/A' else 'N/A' }}</strong></p>
+                <details>
+                    <summary>Query Used</summary>
+                    <pre><code>{{ queries.q6 | default('Query not available.') }}</code></pre>
+                </details>
+            </div>
+
+            <div class="result-card">
+                <h2>7. JHU CS Masters Entries</h2>
+                <p class="data">Total Entries: <strong>{{ results.q7 | default('N/A') }}</strong></p>
+                <details>
+                    <summary>Query Used</summary>
+                    <pre><code>{{ queries.q7 | default('Query not available.') }}</code></pre>
+                </details>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <p>Module 3 Assignment - JHU EP 605.256</p>
+    </footer>
+</body>
+</html> 
