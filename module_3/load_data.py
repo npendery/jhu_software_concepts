@@ -84,7 +84,7 @@ def update_column_names():
         conn.commit()
         cur.close()
     except (Exception, psycopg2.DatabaseError) as error:
-        print(f"Error inserting data: {error}")
+        print(f"Error altering column names: {error}")
     finally:
         if conn is not None:
             conn.close()
