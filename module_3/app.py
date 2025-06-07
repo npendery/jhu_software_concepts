@@ -1,12 +1,5 @@
-import os
-import sys
-
 import psycopg2
 from flask import Flask, render_template
-
-# Add the parent directory to the Python path to enable imports
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
 from query_data import (
     question_1_fall_2024_entries,
     question_2_international_percentage,
@@ -17,7 +10,7 @@ from query_data import (
     question_7_jhu_cs_masters_entries,
 )
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder="app/templates", static_folder="app/static")
 
 
 @app.route("/")
