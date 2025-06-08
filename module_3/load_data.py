@@ -8,7 +8,26 @@ DB_URL = "postgresql://module_3_owner:npg_iGxjBF1N6bnU@ep-long-glitter-a5i0np1e-
 
 
 def create_table():
-    """Creates the applicants table in the database."""
+    """Creates the applicants table in the database, but first drops the table if it exists.
+    This table is used to store the data from the applicants.
+    The table is created with the following columns:
+    - p_id: Serial primary key
+    - program_name: Text
+    - degree_type: Text
+    - university: Text
+    - comments: Text
+    - date_added: Date
+    - url: Text
+    - program_season_year: Text
+    - student_nationality: Text
+    - gre_total: Float
+    - gre_verbal: Float
+    - gre_aw: Float
+    - gpa: Float
+    - applicant_status: Text
+    - decision_date: Date
+    - program: Text
+    """
     conn = None
     try:
         conn = psycopg2.connect(DB_URL)
@@ -48,8 +67,9 @@ def create_table():
 
 def load_data_from_source():
     """
-    Loads data from the specified source (e.g., a CSV file from Module 1)
+    Loads data from the specified source (e.g., a JSON file from Module 2)
     into the 'applicants' table.
+    The data is loaded into the table using the json_populate_recordset function.
     """
     data = json.loads(Path("../module_2/applicant_data.json").read_text())
     with psycopg2.connect(DB_URL) as conn:
@@ -68,7 +88,16 @@ def load_data_from_source():
 
 
 def update_column_names():
-    """Updates the column names of the applicants table."""
+    """
+    Updates the column names of the applicants table.
+    The column names are updated to the following:
+    - program_season_year -> term
+    - degree_type -> degree
+    - gre_total -> gre
+    - gre_verbal -> gre_v
+    - applicant_status -> status
+    - student_nationality -> us_or_international
+    """
     conn = None
     sql = """
               ALTER TABLE applicants RENAME COLUMN program_season_year TO term;
