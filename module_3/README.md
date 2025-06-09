@@ -62,7 +62,8 @@ module_3/
 1.  The SSH URL to your GitHub repository.
 2.  `load_data.py` under `module_3/`.
 3.  `query_data.py` under `module_3/`.
-4.  `limitations.pdf` under `module_3/` (You need to write this based on the assignment prompt).
-5.  `app.py` and associated Flask app files (`templates/index.html`, `static/style.css`) under `module_3/app/`.
+4.  `limitations.pdf` under `module_3/`.
+5.  `app.py` under `module_3/`.
+6.  Associated Flask app files (`templates/index.html`, `static/style.css`) under `module_3/app/`.
 6.  This `README.md` under `module_3/`.
 7.  `requirements.txt` under `module_3/`. 
