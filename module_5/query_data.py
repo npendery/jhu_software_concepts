@@ -3,6 +3,7 @@ This module contains the functions to query the database and return the results.
 """
 
 import psycopg2
+from psycopg2 import sql
 
 DB_URL = "postgresql://\
 module_3_owner:npg_iGxjBF1N6bnU\
@@ -20,12 +21,25 @@ def question_1_fall_2024_entries():
     """How many entries do you have in your database who have applied for Fall 2024?"""
     conn = get_db_connection()
     cur = conn.cursor()
-    query = "SELECT COUNT(*) FROM applicants WHERE term = 'Fall 2024';"
+
+    # Prepare the query using SQL composition
+    query = sql.SQL(
+        """
+        SELECT COUNT(*) 
+        FROM {} 
+        WHERE {} = {} 
+        LIMIT 1000
+    """
+    ).format(
+        sql.Identifier("applicants"), sql.Identifier("term"), sql.Literal("Fall 2024")
+    )
+
+    # Execute the query
     cur.execute(query)
     count = cur.fetchone()[0]
     cur.close()
     conn.close()
-    return count, query
+    return count, query.as_string(conn)
 
 
 def question_2_international_percentage():
@@ -35,13 +49,34 @@ def question_2_international_percentage():
     """
     conn = get_db_connection()
     cur = conn.cursor()
-    query_international = (
-        "SELECT COUNT(*) FROM applicants WHERE us_or_international = 'International';"
+
+    # Prepare international count query
+    query_international = sql.SQL(
+        """
+        SELECT COUNT(*) 
+        FROM {} 
+        WHERE {} = {} 
+        LIMIT 1000
+    """
+    ).format(
+        sql.Identifier("applicants"),
+        sql.Identifier("us_or_international"),
+        sql.Literal("International"),
     )
+
+    # Prepare total count query
+    query_total = sql.SQL(
+        """
+        SELECT COUNT(*) 
+        FROM {} 
+        LIMIT 1000
+    """
+    ).format(sql.Identifier("applicants"))
+
+    # Execute queries
     cur.execute(query_international)
     international_count = cur.fetchone()[0]
 
-    query_total = "SELECT COUNT(*) FROM applicants;"
     cur.execute(query_total)
     total_count = cur.fetchone()[0]
 
@@ -49,49 +84,89 @@ def question_2_international_percentage():
     conn.close()
 
     if total_count == 0:
-        return 0.00, query_international + " " + query_total
+        return (
+            0.00,
+            f"{query_international.as_string(conn)} {query_total.as_string(conn)}",
+        )
 
     percentage = (international_count / total_count) * 100
-    return round(percentage, 2), query_international + " " + query_total
+    return (
+        round(percentage, 2),
+        f"{query_international.as_string(conn)} {query_total.as_string(conn)}",
+    )
 
 
 def question_3_average_metrics():
     """What is the average GPA, GRE, GRE V, GRE AW of applicants who provide these metrics?"""
     conn = get_db_connection()
     cur = conn.cursor()
-    query = """
-    SELECT 
-        AVG(gpa) as avg_gpa, 
-        AVG(gre) as avg_gre, 
-        AVG(gre_v) as avg_gre_v, 
-        AVG(gre_aw) as avg_gre_aw 
-    FROM applicants 
-    WHERE gpa IS NOT NULL OR gre IS NOT NULL OR gre_v IS NOT NULL OR gre_aw IS NOT NULL;
+
+    # Prepare the query
+    query = sql.SQL(
+        """
+        SELECT 
+            AVG({}) as avg_gpa, 
+            AVG({}) as avg_gre, 
+            AVG({}) as avg_gre_v, 
+            AVG({}) as avg_gre_aw 
+        FROM {} 
+        WHERE {} IS NOT NULL 
+            OR {} IS NOT NULL 
+            OR {} IS NOT NULL 
+            OR {} IS NOT NULL 
+        LIMIT 1000
     """
+    ).format(
+        sql.Identifier("gpa"),
+        sql.Identifier("gre"),
+        sql.Identifier("gre_v"),
+        sql.Identifier("gre_aw"),
+        sql.Identifier("applicants"),
+        sql.Identifier("gpa"),
+        sql.Identifier("gre"),
+        sql.Identifier("gre_v"),
+        sql.Identifier("gre_aw"),
+    )
+
+    # Execute the query
     cur.execute(query)
     averages = cur.fetchone()
     cur.close()
     conn.close()
-    # averages will be a tuple (avg_gpa, avg_gre, avg_gre_v, avg_gre_aw)
-    return averages, query
+    return averages, query.as_string(conn)
 
 
 def question_4_avg_gpa_american_fall_2024():
     """What is their average GPA of American students in Fall 2024?"""
     conn = get_db_connection()
     cur = conn.cursor()
-    query = """
-        SELECT AVG(gpa) 
-        FROM applicants 
-        WHERE us_or_international = 'American' 
-        AND term = 'Fall 2024' 
-        AND gpa IS NOT NULL;
+
+    # Prepare the query
+    query = sql.SQL(
+        """
+        SELECT AVG({}) 
+        FROM {} 
+        WHERE {} = {} 
+            AND {} = {} 
+            AND {} IS NOT NULL 
+        LIMIT 1000
     """
+    ).format(
+        sql.Identifier("gpa"),
+        sql.Identifier("applicants"),
+        sql.Identifier("us_or_international"),
+        sql.Literal("American"),
+        sql.Identifier("term"),
+        sql.Literal("Fall 2024"),
+        sql.Identifier("gpa"),
+    )
+
+    # Execute the query
     cur.execute(query)
     avg_gpa = cur.fetchone()[0]
     cur.close()
     conn.close()
-    return avg_gpa, query
+    return avg_gpa, query.as_string(conn)
 
 
 def question_5_fall_2024_acceptance_percentage():
@@ -99,20 +174,39 @@ def question_5_fall_2024_acceptance_percentage():
     conn = get_db_connection()
     cur = conn.cursor()
 
-    query_acceptances = """
-    SELECT COUNT(*) 
-    FROM applicants 
-    WHERE term = 'Fall 2024' 
-    AND status = 'Accepted';
+    # Prepare acceptance count query
+    query_acceptances = sql.SQL(
+        """
+        SELECT COUNT(*) 
+        FROM {} 
+        WHERE {} = {} 
+            AND {} = {} 
+        LIMIT 1000
     """
+    ).format(
+        sql.Identifier("applicants"),
+        sql.Identifier("term"),
+        sql.Literal("Fall 2024"),
+        sql.Identifier("status"),
+        sql.Literal("Accepted"),
+    )
+
+    # Prepare total count query
+    query_total_fall_2024 = sql.SQL(
+        """
+        SELECT COUNT(*) 
+        FROM {} 
+        WHERE {} = {} 
+        LIMIT 1000
+    """
+    ).format(
+        sql.Identifier("applicants"), sql.Identifier("term"), sql.Literal("Fall 2024")
+    )
+
+    # Execute queries
     cur.execute(query_acceptances)
     acceptance_count = cur.fetchone()[0]
 
-    query_total_fall_2024 = """
-    SELECT COUNT(*) 
-    FROM applicants 
-    WHERE term = 'Fall 2024';
-    """
     cur.execute(query_total_fall_2024)
     total_fall_2024_count = cur.fetchone()[0]
 
@@ -120,28 +214,49 @@ def question_5_fall_2024_acceptance_percentage():
     conn.close()
 
     if total_fall_2024_count == 0:
-        return 0.00, query_acceptances + " " + query_total_fall_2024
+        return (
+            0.00,
+            f"{query_acceptances.as_string(conn)} {query_total_fall_2024.as_string(conn)}",
+        )
 
     percentage = (acceptance_count / total_fall_2024_count) * 100
-    return round(percentage, 2), query_acceptances + " " + query_total_fall_2024
+    return (
+        round(percentage, 2),
+        f"{query_acceptances.as_string(conn)} {query_total_fall_2024.as_string(conn)}",
+    )
 
 
 def question_6_avg_gpa_accepted_fall_2024():
     """What is the average GPA of applicants who applied for Fall 2024 who are Acceptances?"""
     conn = get_db_connection()
     cur = conn.cursor()
-    query = """
-    SELECT AVG(gpa) 
-    FROM applicants 
-    WHERE term = 'Fall 2024' 
-    AND status = 'Accepted' 
-    AND gpa IS NOT NULL;
+
+    # Prepare the query
+    query = sql.SQL(
+        """
+        SELECT AVG({}) 
+        FROM {} 
+        WHERE {} = {} 
+            AND {} = {} 
+            AND {} IS NOT NULL 
+        LIMIT 1000
     """
+    ).format(
+        sql.Identifier("gpa"),
+        sql.Identifier("applicants"),
+        sql.Identifier("term"),
+        sql.Literal("Fall 2024"),
+        sql.Identifier("status"),
+        sql.Literal("Accepted"),
+        sql.Identifier("gpa"),
+    )
+
+    # Execute the query
     cur.execute(query)
     avg_gpa = cur.fetchone()[0]
     cur.close()
     conn.close()
-    return avg_gpa, query
+    return avg_gpa, query.as_string(conn)
 
 
 def question_7_jhu_cs_masters_entries():
@@ -151,18 +266,33 @@ def question_7_jhu_cs_masters_entries():
     """
     conn = get_db_connection()
     cur = conn.cursor()
-    query = """
-    SELECT COUNT(*) 
-    FROM applicants 
-    WHERE program ILIKE '%Johns Hopkins%' 
-    AND program ILIKE '%Computer Science%' 
-    AND degree = 'Masters';
+
+    # Prepare the query
+    query = sql.SQL(
+        """
+        SELECT COUNT(*) 
+        FROM {} 
+        WHERE {} ILIKE {} 
+            AND {} ILIKE {} 
+            AND {} = {} 
+        LIMIT 1000
     """
+    ).format(
+        sql.Identifier("applicants"),
+        sql.Identifier("program"),
+        sql.Literal("%Johns Hopkins%"),
+        sql.Identifier("program"),
+        sql.Literal("%Computer Science%"),
+        sql.Identifier("degree"),
+        sql.Literal("Masters"),
+    )
+
+    # Execute the query
     cur.execute(query)
     count = cur.fetchone()[0]
     cur.close()
     conn.close()
-    return count, query
+    return count, query.as_string(conn)
 
 
 if __name__ == "__main__":
