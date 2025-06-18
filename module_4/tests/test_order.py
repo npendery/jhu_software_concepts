@@ -1,3 +1,7 @@
+"""
+Unit tests for Order class
+"""
+
 import pytest
 from src.order import Order
 from src.pizza import Pizza
@@ -12,7 +16,7 @@ class TestOrder:
         order = Order()
 
         # Assert order should include an empty list of pizza objects
-        assert order.pizzas == []
+        assert not order.pizzas
         assert isinstance(order.pizzas, list)
 
         # Assert order should have a zero cost until an order is input

@@ -1,3 +1,7 @@
+"""
+Unit tests for Pizza class
+"""
+
 import pytest
 from src.pizza import Pizza
 
@@ -13,7 +17,11 @@ class TestPizza:
         # Test pizza should return an initialized pizza
         assert pizza is not None
 
-        # Test pizza should have crust (str), sauce (list of str), cheese (str), toppings (list of str)
+        # Test pizza should have
+        # - crust (str)
+        # - sauce (list of str)
+        # - cheese (str)
+        # - toppings (list of str)
         assert isinstance(pizza.crust, str)
         assert isinstance(pizza.sauce, list)
         assert all(isinstance(s, str) for s in pizza.sauce)

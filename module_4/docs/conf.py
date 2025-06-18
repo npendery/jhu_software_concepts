@@ -1,3 +1,10 @@
+"""
+Configuration file for the Sphinx documentation builder.
+"""
+
+# pylint: disable=C0103
+# pylint: disable=W0622
+
 # Configuration file for the Sphinx documentation builder.
 #
 # For the full list of built-in configuration values, see the documentation:
@@ -12,8 +19,8 @@ sys.path.insert(0, os.path.abspath(".."))
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 project = "Pizza Ordering System"
-copyright = "2025, Student"
-author = "Student"
+copyright = "2025, Nick Pendery"
+author = "Nick Pendery"
 
 version = "1.0"
 release = "1.0"
