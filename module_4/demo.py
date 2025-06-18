@@ -11,6 +11,9 @@ from src.pizza import Pizza
 
 
 def main():
+    """
+    Main function to demonstrate the pizza ordering system.
+    """
     print("=== Pizza Ordering System Demo ===\n")
 
     # Order 1 from assignment
@@ -18,13 +21,13 @@ def main():
     order1 = Order()
 
     # Pizza(thin, pesto, mozzarella, mushrooms)
-    pizza1_1 = Pizza("thin", ["pesto"], "mozzarella", ["mushrooms"])
+    pizza_1 = Pizza("thin", ["pesto"], "mozzarella", ["mushrooms"])
 
     # Pizza(thick, marinara, mozzarella, mushrooms)
-    pizza1_2 = Pizza("thick", ["marinara"], "mozzarella", ["mushrooms"])
+    pizza_2 = Pizza("thick", ["marinara"], "mozzarella", ["mushrooms"])
 
-    order1.input_pizza(pizza1_1)
-    order1.input_pizza(pizza1_2)
+    order1.input_pizza(pizza_1)
+    order1.input_pizza(pizza_2)
 
     print(order1)
     print(f"\nOrder 1 Total: ${order1.cost}")
@@ -35,15 +38,15 @@ def main():
     order2 = Order()
 
     # Pizza(gluten_free, marinara, mozzarella, pineapple)
-    pizza2_1 = Pizza("gluten_free", ["marinara"], "mozzarella", ["pineapple"])
+    pizza_3 = Pizza("gluten_free", ["marinara"], "mozzarella", ["pineapple"])
 
     # Pizza(thin, liv_sauce, pesto, mozzarella, mushrooms, pepperoni)
-    pizza2_2 = Pizza(
+    pizza_4 = Pizza(
         "thin", ["liv_sauce", "pesto"], "mozzarella", ["mushrooms", "pepperoni"]
     )
 
-    order2.input_pizza(pizza2_1)
-    order2.input_pizza(pizza2_2)
+    order2.input_pizza(pizza_3)
+    order2.input_pizza(pizza_4)
 
     print(order2)
     print(f"\nOrder 2 Total: ${order2.cost}")
