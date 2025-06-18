@@ -1,3 +1,7 @@
+"""
+Integration tests for Pizza Ordering System
+"""
+
 import pytest
 from src.order import Order
 from src.pizza import Pizza
@@ -36,7 +40,9 @@ class TestIntegration:
     @pytest.mark.pizza
     def test_assignment_example_orders(self):
         """Test the specific orders mentioned in the assignment"""
-        # Order 1: Pizza(thin, pesto, mozzarella, mushrooms) + Pizza(thick, marinara, mozzarella, mushrooms)
+        # Order 1:
+        # Pizza(thin, pesto, mozzarella, mushrooms) +
+        # Pizza(thick, marinara, mozzarella, mushrooms)
         order1 = Order()
         pizza1_1 = Pizza("thin", ["pesto"], "mozzarella", ["mushrooms"])
         pizza1_2 = Pizza("thick", ["marinara"], "mozzarella", ["mushrooms"])
@@ -49,7 +55,9 @@ class TestIntegration:
         # Total: $24
         assert order1.cost == 24
 
-        # Order 2: Pizza(gluten_free, marinara, mozzarella, pineapple) + Pizza(thin, liv_sauce, pesto, mozzarella, mushrooms, pepperoni)
+        # Order 2:
+        # Pizza(gluten_free, marinara, mozzarella, pineapple) +
+        # Pizza(thin, liv_sauce, pesto, mozzarella, mushrooms, pepperoni)
         order2 = Order()
         pizza2_1 = Pizza("gluten_free", ["marinara"], "mozzarella", ["pineapple"])
         pizza2_2 = Pizza(
