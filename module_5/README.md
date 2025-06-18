@@ -1,4 +1,4 @@
-# Module 3: SQL Data Analysis
+# Module 5: SQL Data Analysis
 
 This project involves loading data scraped from Grad Cafe into a PostgreSQL database, performing SQL-based data analysis, and displaying the results on a Flask webpage.
 
