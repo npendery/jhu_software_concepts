@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+{% block content %}
+    <div class="home-container">
+        <div class="bio">
+            <h1>Nick Pendery</h1>
+            <h2>Director of Engineering</h2>
+            <p>
+                I'm a software engineer with a passion for building scalable and efficient systems.
+                My current role is Director of Engineering at Homebot.
+                I live in Denver, CO with my wife and child, with another on the way!
+                I love all outdoor activities, but especially skiing, climbing, and mountain biking.
+            </p>
+        </div>
+        <div class="profile-pic">
+            <img src="{{ url_for('static', filename='photo.jpeg') }}" alt="Photo of Nick Pendery">
+        </div>
+    </div>
+{% endblock %} 
