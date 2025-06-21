@@ -1,28 +1,23 @@
-# Personal Portfolio Website
+# Personal Portfolio Website in Docker
 
-This is a simple personal portfolio website built with Flask.
+This is a simple personal portfolio website built with Flask and run in Docker
 
 ## Setup and Running
 
 1.  **Clone the repository.**
-2.  **Navigate to the `module_1` directory:**
+2.  **Navigate to the `module_6` directory:**
     ```bash
-    cd module_1
+    cd module_6
     ```
-3.  **Create a virtual environment (optional but recommended):**
+3.  **Build a Docker Image:**
     ```bash
-    python3 -m venv venv
-    source venv/bin/activate  # On Windows use `venv\Scripts\activate`
+    docker build . -t npendery/module_6
     ```
-4.  **Install dependencies:**
+4.  **Run the Docker Image:**
     ```bash
-    pip install -r requirements.txt
+    docker run -p 8080:8080 npendery/module_6
     ```
-5.  **Run the application:**
-    ```bash
-    python run.py
-    ```
-6.  Open your web browser and go to `http://127.0.0.1:8000/`
+5.  Open your web browser and go to `http://127.0.0.1:8080/`
 
 ## Project Structure
 
@@ -37,7 +32,11 @@ This is a simple personal portfolio website built with Flask.
     -   `base.html`: Base template with navigation.
     -   `home.html`: Homepage template.
     -   `contact.html`: Contact page template.
-    -   `projects.html`: Projects page template. 
+    -   `projects.html`: Projects page template.
+-   `Dockerfile`: Docker set up for project
+
+## Link to dockerhub repository used in this module
+https://hub.docker.com/repository/docker/npendery/module_6/general
 
 ## Screenshots
 
@@ -47,3 +46,4 @@ This is a simple personal portfolio website built with Flask.
 
 [Projects](screenshots/Projects.pdf)
 
+[DockerContainer](screenshots/DockerContainer.pdf)
