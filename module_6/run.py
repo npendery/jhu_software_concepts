@@ -1,3 +1,7 @@
+"""
+This is the main file for the Flask application.
+"""
+
 from flask import Flask
 from pages.routes import pages_bp
 

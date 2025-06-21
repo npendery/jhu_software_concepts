@@ -1,3 +1,7 @@
+"""
+This is the routes file for the Flask application.
+"""
+
 from flask import Blueprint, render_template
 
 pages_bp = Blueprint(
